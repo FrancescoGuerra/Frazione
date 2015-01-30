@@ -4,6 +4,8 @@
 #include "Frazione.cpp"
 
 class Frazione {
+		friend std::ostream &operator<<(std::ostream& os, const Frazione &fraz);
+		friend std::istream &operator>>(std::istream& is, Frazione &fraz);
 	private:
 		int num, den;
 		void semplifica();
