@@ -83,6 +83,80 @@ std::istream &operator>>(std::istream& is, Frazione &fraz) {
 	return is;
 }
 
+Frazione &Frazione::operator=(const Frazione &altra) {
+	if(this != &altra) {
+		this->num = altra.num;
+		this->den = altra.den;
+	}
+	return *this;
+}
+
+Frazione &Frazione::operator=(const int &n) {
+	return (*this = Frazione(n, 1));
+}
+
+Frazione &Frazione::operator=(const long double &d) {
+	return (*this = Frazione(d));
+}
+
+Frazione &Frazione::operator+=(const Frazione &altra) {
+	int old_den = this->den;
+	this->den = mcm(this->den, altra.den);
+	this->num = (this->den / old_den  * this->num) +
+				(this->den / altra.den * altra.num);
+	return *this;
+}
+
+Frazione &Frazione::operator+=(const int &n) {
+	return (*this += Frazione(n, 1));
+}
+
+Frazione &Frazione::operator-=(const Frazione &altra) {
+	return (*this += -altra);
+}
+
+Frazione &Frazione::operator-=(const int &n) {
+	return (*this -= Frazione(n, 1));
+}
+
+Frazione &Frazione::operator*=(const Frazione &altra) {
+	this->num *= altra.num;
+	this->den *= altra.den;
+	this->semplifica();
+	return *this;
+}
+
+Frazione &Frazione::operator*=(const int &n) {
+	return (*this *= Frazione(n, 1));
+}
+
+Frazione &Frazione::operator/=(const Frazione &altra) {
+	return (*this *= Frazione(altra.den, altra.num));
+}
+
+Frazione &Frazione::operator/=(const int &n) {
+	return (*this /= Frazione(n, 1));
+}
+
+Frazione &Frazione::operator^=(const int &pow) {
+	if(pow == 0) {
+		this->num = 1;
+		this->den = 1;
+	} else {
+		int p = pow, n = this->num, d = this->den;
+		if(pow < 0) {
+			p = -p;
+			this->num = d;
+			this->den = n;
+		}
+		for(int i = 1; i < p; i++) {
+			this->num *= n;
+			this->den *= d;
+		}
+	}
+	return *this;
+}
+
 void Frazione::semplifica() {
 	int mcd = MCD(this->num, this->den);
 	this->num /= mcd;
