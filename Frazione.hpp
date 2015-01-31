@@ -6,6 +6,18 @@
 class Frazione {
 		friend std::ostream &operator<<(std::ostream& os, const Frazione &fraz);
 		friend std::istream &operator>>(std::istream& is, Frazione &fraz);
+		Frazione &operator=(const Frazione &altra);
+		Frazione &operator=(const int &n);
+		Frazione &operator=(const long double &n);
+		Frazione &operator+=(const Frazione &altra);
+		Frazione &operator+=(const int &n);
+		Frazione &operator-=(const Frazione &altra);
+		Frazione &operator-=(const int &n);
+		Frazione &operator*=(const Frazione &altra);
+		Frazione &operator*=(const int &n);
+		Frazione &operator/=(const Frazione &altra);
+		Frazione &operator/=(const int &n);
+		Frazione &operator^=(const int &pow);
 	private:
 		int num, den;
 		void semplifica();
